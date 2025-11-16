@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>madrasmasala- Home</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <div class="logo">Madras Masala</div>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        <li><a href="login.html">Login</a></li>
+         <li><a href="reg.html">Registration</a></li>
+
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1 style="color: 3b1f1f;">Authentic South Indian Flavors</h1>
+        <p>Order your favorite dishes delivered to your door</p>
+        <a href="product.html" class="btn">Shop Now</a>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="products">
+      <h2>Popular Dishes</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="../images/dosa.jpg" alt="Dosa">
+          <h3>Masala Dosa</h3>
+          <p>₹80</p>
+        </div>
+        <div class="product-card">
+          <img src="../images/idli.jpg" alt="Idli">
+          <h3>Idli Vada</h3>
+          <p>₹60</p>
+        </div>
+        <div class="product-card">
+          <img src="../images/biriyani.jpg" alt="Biriyani">
+          <h3>Chettinad Biriyani</h3>
+          <p>₹150</p>
+        </div>
+        <div class="product-card">
+          <img src="../images/coffee.jpg" alt="Coffee">
+          <h3>Filter Coffee</h3>
+          <p>₹30</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 South Taste. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
+
+<?php 
+
+
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="d2";
+
+$conn=new mysqli($servername,$username,$password,$dbname);
+
+
+if (! $conn) {
+    echo "Db Not connected";
+}
+
+?>

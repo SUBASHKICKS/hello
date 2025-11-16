@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile - Madras Masala</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .profile-section {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .profile-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+    }
+
+    .profile-sidebar {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .profile-main {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .profile-tabs {
+      display: flex;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      border-bottom-color: #3b1f1f;
+      color: #3b1f1f;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .address-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .address-card.default {
+      border-color: #3b1f1f;
+      background: #f9f9f9;
+    }
+
+    .address-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .address-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+      color: #666;
+    }
+
+    .address-actions button:hover {
+      color: #3b1f1f;
+    }
+
+    .address-form {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #3b1f1f;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn-primary:hover {
+      background: #2a1515;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Madras Masala</div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+      <li><a href="../backend/logout.php">Logout</a></li>
+    </ul>
+  </header>
+
+  <main class="profile-section">
+    <h1>My Profile</h1>
+    <div class="profile-container">
+      <div class="profile-sidebar">
+        <h3>Quick Actions</h3>
+        <ul>
+          <li><a href="#addresses">Manage Addresses</a></li>
+          <li><a href="#orders">Order History</a></li>
+          <li><a href="#settings">Account Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="profile-main">
+        <div class="profile-tabs">
+          <button class="tab-btn active" onclick="showTab('addresses')">Addresses</button>
+          <button class="tab-btn" onclick="showTab('orders')">Orders</button>
+          <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+        </div>
+
+        <div id="addresses" class="tab-content active">
+          <h2>Delivery Addresses</h2>
+          <div id="addresses-list">
+            <!-- Addresses will be loaded here -->
+          </div>
+
+          <button class="btn-primary" onclick="showAddAddressForm()">Add New Address</button>
+
+          <div id="address-form" class="address-form" style="display: none;">
+            <h3 id="form-title">Add New Address</h3>
+            <form id="addressForm" action="../backend/address.php" method="POST">
+              <input type="hidden" name="action" id="form-action" value="add_address">
+              <input type="hidden" name="address_id" id="address-id">
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="address_type">Address Type</label>
+                  <select name="address_type" id="address_type" required>
+                    <option value="home">Home</option>
+                    <option value="work">Work</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="full_name">Full Name</label>
+                  <input type="text" name="full_name" id="full_name" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" required>
+                </div>
+                <div class="form-group">
+                  <label for="pincode">Pincode</label>
+                  <input type="text" name="pincode" id="pincode" pattern="[0-9]{6}" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address_line1">Address Line 1</label>
+                <input type="text" name="address_line1" id="address_line1" placeholder="Street address, building, apartment" required>
+              </div>
+
+              <div class="form-group">
+                <label for="address_line2">Address Line 2 (Optional)</label>
+                <input type="text" name="address_line2" id="address_line2" placeholder="Area, locality">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" name="city" id="city" required>
+                </div>
+                <div class="form-group">
+                  <label for="state">State</label>
+                  <input type="text" name="state" id="state" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="landmark">Landmark (Optional)</label>
+                <input type="text" name="landmark" id="landmark" placeholder="Near landmark">
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" name="is_default" id="is_default"> Set as default address
+                </label>
+              </div>
+
+              <button type="submit" class="btn-primary">Save Address</button>
+              <button type="button" class="btn-secondary" onclick="hideAddAddressForm()">Cancel</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="orders" class="tab-content">
+          <h2>Order History</h2>
+          <p>Order history feature coming soon...</p>
+        </div>
+
+        <div id="settings" class="tab-content">
+          <h2>Account Settings</h2>
+          <p>Account settings feature coming soon...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Madras Masala. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Tab switching
+    function showTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Show selected tab
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Load addresses
+    async function loadAddresses() {
+      try {
+        const response = await fetch('../backend/address.php?action=get_addresses');
+        const addresses = await response.json();
+
+        const addressesList = document.getElementById('addresses-list');
+        addressesList.innerHTML = '';
+
+        if (addresses.length === 0) {
+          addressesList.innerHTML = '<p>No addresses saved yet.</p>';
+          return;
+        }
+
+        addresses.forEach(address => {
+          const addressCard = document.createElement('div');
+          addressCard.className = `address-card ${address.is_default ? 'default' : ''}`;
+
+          addressCard.innerHTML = `
+            <div class="address-actions">
+              <button onclick="editAddress(${address.id})"><i class="fas fa-edit"></i></button>
+              <button onclick="deleteAddress(${address.id})"><i class="fas fa-trash"></i></button>
+            </div>
+            <h4>${address.full_name} (${address.address_type})</h4>
+            <p>${address.address_line1}</p>
+            ${address.address_line2 ? `<p>${address.address_line2}</p>` : ''}
+            <p>${address.city}, ${address.state} - ${address.pincode}</p>
+            <p>Phone: ${address.phone}</p>
+            ${address.landmark ? `<p>Landmark: ${address.landmark}</p>` : ''}
+            ${address.is_default ? '<span style="color: #3b1f1f; font-weight: bold;">Default Address</span>' : ''}
+          `;
+
+          addressesList.appendChild(addressCard);
+        });
+      } catch (error) {
+        console.error('Error loading addresses:', error);
+      }
+    }
+
+    // Show add address form
+    function showAddAddressForm() {
+      document.getElementById('form-title').textContent = 'Add New Address';
+      document.getElementById('form-action').value = 'add_address';
+      document.getElementById('address-id').value = '';
+      document.getElementById('addressForm').reset();
+      document.getElementById('address-form').style.display = 'block';
+    }
+
+    // Hide add address form
+    function hideAddAddressForm() {
+      document.getElementById('address-form').style.display = 'none';
+    }
+
+    // Edit address
+    function editAddress(addressId) {
+      // This would require fetching address details and populating the form
+      alert('Edit address feature coming soon!');
+    }
+
+    // Delete address
+    function deleteAddress(addressId) {
+      if (confirm('Are you sure you want to delete this address?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '../backend/address.php';
+
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'delete_address';
+
+        const idInput = document.createElement('input');
+        idInput.type = 'hidden';
+        idInput.name = 'address_id';
+        idInput.value = addressId;
+
+        form.appendChild(actionInput);
+        form.appendChild(idInput);
+        document.body.appendChild(form);
+        form.submit();
+      }
+    }
+
+    // Load addresses on page load
+    loadAddresses();
+  </script>
+
+</body>
+</html>
