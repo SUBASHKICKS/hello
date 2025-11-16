@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cart - Madras Masala</title>
+  <link rel="stylesheet" href="../styles/cart.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Madras Masala</div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="reg.html">Registration</a></li>
+    </ul>
+  </header>
+
+  <main class="cart-section">
+    <h1>Your Cart</h1>
+    <div class="cart-container">
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="cart-body">
+          <!-- Items will be injected by JS -->
+        </tbody>
+      </table>
+
+      <div class="cart-summary">
+        <h2 id="grand-total">Total: ₹0</h2>
+        <button onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Madras Masala. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const cartBody = document.getElementById('cart-body');
+    const grandTotalEl = document.getElementById('grand-total');
+
+    function renderCart() {
+      cartBody.innerHTML = ''; // clear old
+      let grandTotal = 0;
+
+      cart.forEach((item, index) => {
+        if (!item.qty) item.qty = 1;
+        let itemTotal = item.qty * item.price;
+        grandTotal += itemTotal;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td><input type="number" min="1" value="${item.qty}" data-index="${index}" class="qty-input"/></td>
+          <td>₹${item.price}</td>
+          <td>₹${itemTotal}</td>
+          <td><button class="remove-btn" data-index="${index}">Remove</button></td>
+        `;
+        cartBody.appendChild(row);
+      });
+
+      grandTotalEl.textContent = 'Total: ₹' + grandTotal;
+
+      // Attach events
+      document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('change', updateQty);
+      });
+
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', removeItem);
+      });
+    }
+
+    function updateQty(e) {
+      const index = e.target.dataset.index;
+      let newQty = parseInt(e.target.value);
+      if (isNaN(newQty) || newQty < 1) newQty = 1;
+      cart[index].qty = newQty;
+      saveCart();
+      renderCart();
+    }
+
+    function removeItem(e) {
+      const index = e.target.dataset.index;
+      cart.splice(index, 1); // remove from array
+      saveCart();
+      renderCart();
+    }
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    async function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
+      try {
+        // Create Razorpay order
+        const response = await fetch('../backend/checkout.php?action=create_order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'cart=' + encodeURIComponent(JSON.stringify(cart))
+        });
+
+        const orderData = await response.json();
+
+        if (orderData.error) {
+          alert(orderData.error);
+          return;
+        }
+
+        // Initialize Razorpay checkout
+        const options = {
+          key: orderData.key,
+          amount: orderData.amount,
+          currency: orderData.currency,
+          order_id: orderData.order_id,
+          name: 'Madras Masala',
+          description: 'Food Order Payment',
+          handler: function (response) {
+            // Handle successful payment
+            verifyPayment(response, orderData.db_order_id);
+          },
+          prefill: {
+            name: '',
+            email: '',
+            contact: ''
+          },
+          theme: {
+            color: '#3b1f1f'
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+      }
+    }
+
+    function verifyPayment(response, dbOrderId) {
+      // Create form to verify payment
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '../backend/checkout.php';
+
+      const fields = [
+        { name: 'razorpay_payment_id', value: response.razorpay_payment_id },
+        { name: 'razorpay_order_id', value: response.razorpay_order_id },
+        { name: 'razorpay_signature', value: response.razorpay_signature },
+        { name: 'db_order_id', value: dbOrderId }
+      ];
+
+      fields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = field.name;
+        input.value = field.value;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+
+    // Initial render
+    renderCart();
+  </script>
+
+</body>
+</html>

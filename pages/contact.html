@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us - Madras Masala</title>
+  <link rel="stylesheet" href="../styles/contact.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Madras Masala</div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+       <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+       <li><a href="reg.html">Registration</a></li>
+       <li><a href="login.html">Login</a></li>
+         
+
+    </ul>
+  </header>
+
+  <main class="contact-section">
+    <h1>Contact Us</h1>
+    <div class="contact-container">
+
+      <div class="contact-info">
+        <h2>Reach Us At</h2>
+        <p><strong>Email:</strong> <a href="mailto:subash6257@gmail.com">subash6257@gmail.com</a></p>
+        <p><strong>Phone:</strong> <a href="tel:+917798213376">+91 77982 13376</a></p>
+        <p><strong>Location:</strong> Madurai, Tamil Nadu</p>
+      </div>
+
+      <div class="feedback-form">
+        <h2>Send Us Your Feedback</h2>
+        <form action="../backend/contact.php" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" rows="5" placeholder="Your Message or Feedback" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Madras Masala. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

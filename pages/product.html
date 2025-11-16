@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Madras Masala - Products</title>
+  <link rel="stylesheet" href="../styles/product.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Popup styling kept inline because it’s small and specific */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #28a745;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+      z-index: 1000;
+    }
+    .popup.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Madras Masala</div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="reg.html">Registration</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <section class="product-section">
+      <h1>Menu</h1>
+      <div class="product-container">
+
+        
+        <div class="product-card">
+          <img src="../images/dosa.jpg" alt="Masala Dosa" />
+          <h2>Masala Dosa</h2>
+          <p class="price">80</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/idli.jpg" alt="Idli Sambar" />
+          <h2>Idli Sambar</h2>
+          <p class="price">60</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/biriyani.jpg" alt="Chettinad Biriyani" />
+          <h2>Chettinad Biriyani</h2>
+          <p class="price">150</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/coffee.jpg" alt="Filter Coffee" />
+          <h2>Filter Coffee</h2>
+          <p class="price">30</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/vada.jpg" alt="Vada" />
+          <h2>Vada</h2>
+          <p class="price">30</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/pongal.jpg" alt="Pongal" />
+          <h2>Pongal</h2>
+          <p class="price">45</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/uttapam.jpg" alt="Uttapam" />
+          <h2>Uttapam</h2>
+          <p class="price">60</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/puri.jpg" alt="Puri Masala" />
+          <h2>Puri Masala</h2>
+          <p class="price">55</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/lemonrice.jpg" alt="Lemon Rice" />
+          <h2>Lemon Rice</h2>
+          <p class="price">70</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/curd rice.jpg" alt="Curd Rice" />
+          <h2>Curd Rice</h2>
+          <p class="price">65</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/sambar rice.jpg" alt="Sambar Rice" />
+          <h2>Sambar Rice</h2>
+          <p class="price">75</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/meals.jpg" alt="Meals Combo" />
+          <h2>Meals Combo</h2>
+          <p class="price">120</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/tea.jpg" alt="Masala Tea" />
+          <h2>Masala Tea</h2>
+          <p class="price">20</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/buttermilk.jpg" alt="Butter Milk" />
+          <h2>Butter Milk</h2>
+          <p class="price">15</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/lassi.jpg" alt="Lassi" />
+          <h2>Lassi</h2>
+          <p class="price">30</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="../images/coconut.jpg" alt="Tender Coconut" />
+          <h2>Tender Coconut</h2>
+          <p class="price">40</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Madras Masala. All rights reserved.</p>
+  </footer>
+
+  <!-- Popup element -->
+  <div class="popup" id="popup">Added to cart!</div>
+
+  <script>
+    const buttons = document.querySelectorAll('.add-to-cart');
+    const popup = document.getElementById('popup');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const name = card.querySelector('h2').textContent;
+        const price = parseInt(card.querySelector('.price').textContent);
+
+        // product object with quantity 1
+        const product = { name, price, qty: 1 };
+
+        // get existing cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push(product);
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // show popup
+        popup.textContent = name + ' added to cart!';
+        popup.classList.add('show');
+
+        // hide after 3 seconds
+        setTimeout(() => {
+          popup.classList.remove('show');
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>

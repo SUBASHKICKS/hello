@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - Madras Masala</title>
+  <link rel="stylesheet" href="../styles/reg.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Madras Masala</div>
+    <ul class="nav-links">
+      <!-- <li><a href="home.html">Home</a></li> -->
+      <li><a href="product.html">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <main class="register-section">
+    <h1>Customer Registration</h1>
+
+    <form action="../backend/register.php" method="POST" class="register-form">
+
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" />
+
+      <h3 style="color: #3b1f1f; margin: 20px 0 10px 0; text-align: left;">Delivery Address</h3>
+
+      <input type="text" name="address_line1" placeholder="Address Line 1 (Street, Building, Apartment)" required />
+      <input type="text" name="address_line2" placeholder="Address Line 2 (Area, Locality) - Optional" />
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input type="text" name="city" placeholder="City" required />
+        <input type="text" name="state" placeholder="State" required />
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input type="text" name="pincode" placeholder="Pincode" pattern="[0-9]{6}" required />
+        <input type="text" name="landmark" placeholder="Landmark (Optional)" />
+      </div>
+
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <p style="text-align: center; margin-top: 20px;">
+      Already have an account? <a href="login.html" style="color: #3b1f1f;">Login here</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 Madras Masala. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
